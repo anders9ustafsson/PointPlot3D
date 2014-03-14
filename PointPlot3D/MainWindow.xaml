@@ -1,0 +1,91 @@
+﻿<Window x:Class="PointPlot3D.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Point Plot 3D" Height="400" Width="800" Loaded="MainWindow_OnLoaded" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="6" HorizontalAlignment="Left" Orientation="Horizontal">
+            <Button x:Name="OpenFileButton" Click="OpenFileButton_OnClick" Padding="12,3" VerticalAlignment="Bottom">Open File...</Button>
+            <StackPanel Margin="12,0,0,0" Orientation="Vertical" VerticalAlignment="Bottom">
+                <CheckBox x:Name="LogAxisX" IsThreeState="False" IsChecked="True">X log axis</CheckBox>
+                <CheckBox x:Name="LogAxisY" IsThreeState="False" IsChecked="False">Y log axis</CheckBox>
+                <CheckBox x:Name="LogAxisZ" IsThreeState="False" IsChecked="False">Z log axis</CheckBox>
+            </StackPanel>
+            <Grid Margin="12,0,0,0" VerticalAlignment="Bottom">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="75"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">Display minimum:</TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="DisplayMin" Margin="3" HorizontalContentAlignment="Right" Text="0"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" x:Name="MinValue" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">Display maximum:</TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="DisplayMax" Margin="3" HorizontalContentAlignment="Right" Text="1"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" x:Name="MaxValue" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Margin="12,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="75"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">X:</TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="PosX" Margin="3" HorizontalContentAlignment="Right"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">Y:</TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="PosY" Margin="3" HorizontalContentAlignment="Right"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">Z:</TextBlock>
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="PosZ" Margin="3" HorizontalContentAlignment="Right"/>
+            </Grid>
+            <Button x:Name="UpdateButton" VerticalAlignment="Bottom" Margin="12,0,0,0" Padding="12,3" Click="UpdateButton_OnClick">Update</Button>
+        </StackPanel>
+        <Viewport3D Name="MainViewport" Grid.Row="1"
+                    ClipToBounds = "False"  
+                    IsHitTestVisible="false"
+                    RenderOptions.EdgeMode="Aliased">
+            <Viewport3D.Camera>
+                <OrthographicCamera x:Name="Camera" Width="2"
+                    FarPlaneDistance="10"
+                    NearPlaneDistance="1" 
+                    LookDirection="0,0,-1"
+                    UpDirection="0,1,0"
+                    Position="0,0,2" />
+            </Viewport3D.Camera>
+            <Viewport3D.Children>
+                <ModelVisual3D x:Name="Light1">
+                    <ModelVisual3D.Content>
+                        <DirectionalLight Color="White" Direction="1, 1, -1" />
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+                <ModelVisual3D x:Name="Light2">
+                    <ModelVisual3D.Content>
+                        <DirectionalLight Color="White" Direction="-1, 1, -1" />
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+                <ModelVisual3D x:Name="Light3">
+                    <ModelVisual3D.Content>
+                        <DirectionalLight Color="White" Direction="0,-1,-0.5" />
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+            </Viewport3D.Children>
+        </Viewport3D>
+
+        <Canvas x:Name="CanvasOn3D" Grid.Row="1"
+                Background="Transparent" 
+                MouseUp="OnViewportMouseUp"  
+                MouseDown="OnViewportMouseDown"  
+                MouseMove="OnViewportMouseMove" Margin="0">
+        </Canvas>
+    </Grid>
+</Window>
