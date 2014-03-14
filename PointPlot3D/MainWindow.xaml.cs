@@ -60,6 +60,8 @@ namespace PointPlot3D
 
         private void OpenFileButton_OnClick(object sender, RoutedEventArgs e)
         {
+            Title = "Point Plot 3D";
+
             var dlg = new OpenFileDialog
             {
                 Multiselect = false,
@@ -68,6 +70,8 @@ namespace PointPlot3D
             };
 
             if (!dlg.ShowDialog(this).GetValueOrDefault()) return;
+
+            Title = dlg.FileName;
 
             using (var stream = dlg.OpenFile())
             {
